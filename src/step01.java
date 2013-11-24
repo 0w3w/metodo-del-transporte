@@ -1,3 +1,7 @@
+
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -10,10 +14,13 @@
  */
 public class step01 extends javax.swing.JFrame {
 
+    private DefaultListModel suministrosListModel;
+    
     /**
      * Creates new form step01
      */
     public step01() {
+        suministrosListModel = new DefaultListModel();
         initComponents();
     }
 
@@ -30,11 +37,11 @@ public class step01 extends javax.swing.JFrame {
         StepTitle = new javax.swing.JLabel();
         subTitle = new javax.swing.JLabel();
         scrollPaneSuministros = new javax.swing.JScrollPane();
-        listaSuministros = new javax.swing.JList();
+        listaSuministros = new javax.swing.JList(this.suministrosListModel);
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         nextStepBtn = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        eliminarSuministroBtn = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         nombreSuministroTxt = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
@@ -69,7 +76,12 @@ public class step01 extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Eliminar Suministro");
+        eliminarSuministroBtn.setText("Eliminar Suministro");
+        eliminarSuministroBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarSuministroBtnActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("Nombre:");
 
@@ -120,7 +132,7 @@ public class step01 extends javax.swing.JFrame {
                         .addGap(0, 72, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton2))
+                        .addComponent(eliminarSuministroBtn))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(restartBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -154,7 +166,7 @@ public class step01 extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(addSuministroBtn)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(eliminarSuministroBtn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nextStepBtn)
@@ -166,7 +178,8 @@ public class step01 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void nextStepBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextStepBtnActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        new step02(this.suministrosListModel).setVisible(true);
     }//GEN-LAST:event_nextStepBtnActionPerformed
 
     private void restartBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restartBtnActionPerformed
@@ -177,15 +190,38 @@ public class step01 extends javax.swing.JFrame {
     private void addSuministroBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSuministroBtnActionPerformed
         String nombreSuministroStr = nombreSuministroTxt.getText();
         String cantidadSuministroStr = cantidadSuministroTxt.getText();
+        double cantidadSuministroDouble = 0.0;
+        try { 
+            cantidadSuministroDouble = Double.parseDouble(cantidadSuministroStr);
+        } catch(Exception ex){
+            JOptionPane.showMessageDialog(this, "La cantidad no está escrita correctamente");
+            return;
+        }
+        if(cantidadSuministroDouble < 0){
+            JOptionPane.showMessageDialog(this, "La cantidad no puede ser negativa");
+            return;
+        }
         // Agregar a la lista
+        this.suministrosListModel.addElement((new suministro(nombreSuministroStr,cantidadSuministroDouble)));
+        // Reset campos
+        this.nombreSuministroTxt.setText("");
+        this.cantidadSuministroTxt.setText("");
+                
     }//GEN-LAST:event_addSuministroBtnActionPerformed
+
+    private void eliminarSuministroBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarSuministroBtnActionPerformed
+        int n = this.listaSuministros.getSelectedIndex();
+        if(n >= 0){
+            this.suministrosListModel.remove(n);
+        }
+    }//GEN-LAST:event_eliminarSuministroBtnActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel StepTitle;
     private javax.swing.JLabel TitleText;
     private javax.swing.JButton addSuministroBtn;
     private javax.swing.JTextField cantidadSuministroTxt;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton eliminarSuministroBtn;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
