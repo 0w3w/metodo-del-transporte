@@ -1,4 +1,6 @@
 
+import java.util.LinkedList;
+import java.util.ListIterator;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -14,7 +16,7 @@ import javax.swing.JOptionPane;
  */
 public class step02 extends javax.swing.JFrame {
 
-    private DefaultListModel suministrosListModel;
+    private LinkedList<suministro> suministrosOrig;
     private DefaultListModel suministrosTmpListModel;
     private DefaultListModel costosListModel;
     private DefaultListModel demandasListModel;
@@ -23,7 +25,7 @@ public class step02 extends javax.swing.JFrame {
      * Creates new form step01
      */
     public step02() {
-        suministrosListModel = new DefaultListModel();
+        suministrosOrig = new LinkedList();
         suministrosTmpListModel = new DefaultListModel();
         costosListModel = new DefaultListModel();
         demandasListModel = new DefaultListModel();
@@ -31,7 +33,10 @@ public class step02 extends javax.swing.JFrame {
     }
     
     public step02(DefaultListModel slm){
-        suministrosListModel = slm;
+        suministrosOrig  = new LinkedList();
+        for(int i = 0;  i < slm.size(); i++){
+            suministrosOrig.add((suministro)slm.getElementAt(i));
+        }
         suministrosTmpListModel = slm;
         demandasListModel = new DefaultListModel();
         costosListModel = new DefaultListModel();
@@ -65,7 +70,7 @@ public class step02 extends javax.swing.JFrame {
         listSuministro = new javax.swing.JList(this.suministrosTmpListModel);
         jScrollPane3 = new javax.swing.JScrollPane();
         listCostoSuministro = new javax.swing.JList(this.costosListModel);
-        costroSuministroTxt = new javax.swing.JTextField();
+        costoSuministroTxt = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         eliminarDemandaBtn = new javax.swing.JButton();
         eliminarCostoDemanda = new javax.swing.JButton();
@@ -204,7 +209,7 @@ public class step02 extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(costroSuministroTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(costoSuministroTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(eliminarCostoDemanda))
@@ -251,7 +256,7 @@ public class step02 extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(costroSuministroTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(costoSuministroTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabel1))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(agregarCostoADemanda))
@@ -286,11 +291,71 @@ public class step02 extends javax.swing.JFrame {
     }//GEN-LAST:event_restartBtnActionPerformed
 
     private void addSuministroBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSuministroBtnActionPerformed
-                
+        String nombreDemandaStr = this.nombreDemandaTxt.getText().trim();
+        if(nombreDemandaStr.length() == 0){
+            JOptionPane.showMessageDialog(this, "Escribe un nombre para la Demanda");
+            return;
+        }
+        String cantidadDemandaStr = this.cantidadDemandaTxt.getText().trim();
+        double cantidadDemandaDouble = 0.0;
+        try { 
+            cantidadDemandaDouble = Double.parseDouble(cantidadDemandaStr);
+        } catch(Exception ex){
+            JOptionPane.showMessageDialog(this, "La cantidad no está escrita correctamente");
+            return;
+        }
+        if(cantidadDemandaDouble < 0){
+            JOptionPane.showMessageDialog(this, "La cantidad no puede ser negativa");
+            return;
+        }
+        // Agregar la demanda
+        LinkedList<suministro> csa =  new LinkedList();
+        for(int i = 0; i < this.costosListModel.size(); i++){
+            csa.add((suministro)this.costosListModel.get(i));
+        }
+        demanda newDemanda = new demanda(nombreDemandaStr, cantidadDemandaDouble, csa);
+        if(this.demandasListModel.contains(newDemanda)){
+            JOptionPane.showMessageDialog(this, "Lo sentimos, no puede haber dos Demandas llamadas igual");
+            return;
+        }
+        this.demandasListModel.addElement(newDemanda);
+        // Reset Fields
+        this.nombreDemandaTxt.setText("");
+        this.cantidadDemandaTxt.setText("");
+        this.suministrosTmpListModel.clear();
+        this.costosListModel.clear();
+        ListIterator<suministro> listIterator = this.suministrosOrig.listIterator();
+        while (listIterator.hasNext()) {
+            this.suministrosTmpListModel.addElement(listIterator.next());
+        }
+        
+        toggleAgregarDemanda();
     }//GEN-LAST:event_addSuministroBtnActionPerformed
 
     private void agregarCostoADemandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarCostoADemandaActionPerformed
-
+        int selectedSuministroIndex     = this.listSuministro.getSelectedIndex();
+        if(selectedSuministroIndex < 0){
+            JOptionPane.showMessageDialog(this, "Selecciona un Suministro");
+            return;
+        }
+        String costoSuministroStr = this.costoSuministroTxt.getText().trim();
+        double costoSuministroDouble = 0.0;
+        try { 
+            costoSuministroDouble = Double.parseDouble(costoSuministroStr);
+        } catch(Exception ex){
+            JOptionPane.showMessageDialog(this, "El costo no está escrito correctamente");
+            return;
+        }
+        suministro selectedSuministro   = (suministro) this.listSuministro.getSelectedValue();
+        // Agregar a listCostoSuministro
+        this.costosListModel.addElement(new costoSuministro(selectedSuministro.nombre,selectedSuministro.cantidad,costoSuministroDouble));
+        // Eliminar de listSuministro
+        this.suministrosTmpListModel.remove(selectedSuministroIndex);
+        // Limpiar Campos
+        this.costoSuministroTxt.setText("");
+        // Update Boton Agregar
+        toggleAgregarDemanda();
+        
     }//GEN-LAST:event_agregarCostoADemandaActionPerformed
 
     private void eliminarDemandaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarDemandaBtnActionPerformed
@@ -301,20 +366,27 @@ public class step02 extends javax.swing.JFrame {
     }//GEN-LAST:event_eliminarDemandaBtnActionPerformed
 
     private void eliminarCostoDemandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarCostoDemandaActionPerformed
-        // TODO Devolver el suministro al suministrosTmpListModel
+        // Eliminarlo de la lista
         int n = this.listCostoSuministro.getSelectedIndex();
         if(n >= 0){
+            costoSuministro cs = (costoSuministro) this.listCostoSuministro.getSelectedValue();
+            this.suministrosTmpListModel.addElement(new suministro(cs.nombre, cs.cantidad));
             this.costosListModel.remove(n);
         }
+        toggleAgregarDemanda();
     }//GEN-LAST:event_eliminarCostoDemandaActionPerformed
 
+    private void toggleAgregarDemanda(){
+        this.addSuministroBtn.setEnabled(this.suministrosTmpListModel.size()==0);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel StepTitle;
     private javax.swing.JLabel TitleText;
     private javax.swing.JButton addSuministroBtn;
     private javax.swing.JButton agregarCostoADemanda;
     private javax.swing.JTextField cantidadDemandaTxt;
-    private javax.swing.JTextField costroSuministroTxt;
+    private javax.swing.JTextField costoSuministroTxt;
     private javax.swing.JButton eliminarCostoDemanda;
     private javax.swing.JButton eliminarDemandaBtn;
     private javax.swing.JLabel jLabel1;

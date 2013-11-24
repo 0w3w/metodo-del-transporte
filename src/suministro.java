@@ -19,4 +19,13 @@ public class suministro {
     public String toString(){
         return this.nombre + " - (" + this.cantidad + ")";
     }
+    
+    @Override
+    public boolean equals(Object other){
+        if (other == null) return false;
+        if (other == this) return true;
+        if (!(other instanceof suministro))return false;
+        suministro otherSuministro = (suministro)other;
+        return this.nombre.equals(otherSuministro.nombre);
+    }
 }

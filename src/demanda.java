@@ -1,5 +1,6 @@
 
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.PriorityQueue;
 
 /*
@@ -15,16 +16,24 @@ import java.util.PriorityQueue;
 public class demanda {
     public String nombre;
     public double cantidad;
-    PriorityQueue<costoSuministro> suministrosPQueue;
+    LinkedList<suministro> costoSuministro;
     
-    public demanda(String n, double c, int capacity){
-        Comparator<costoSuministro> comparador = new costoSuministroComparador();
+    public demanda(String n, double c, LinkedList<suministro> cs){
         this.nombre = n;
         this.cantidad = c;
-        this.suministrosPQueue  = new PriorityQueue<costoSuministro>(capacity, comparador);
+        this.costoSuministro = cs;
     }
     @Override
     public String toString(){
         return this.nombre + " - (" + this.cantidad + ")";
+    }
+    
+    @Override
+    public boolean equals(Object other){
+        if (other == null) return false;
+        if (other == this) return true;
+        if (!(other instanceof demanda))return false;
+        demanda otherDemanda = (demanda)other;
+        return this.nombre.equals(otherDemanda.nombre);
     }
 }

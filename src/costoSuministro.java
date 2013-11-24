@@ -8,17 +8,14 @@
  *
  * @author 0w3w
  */
-public class costoSuministro {
-    public String nombre;
+public class costoSuministro extends suministro {
     public double costo;
-    public int indiceSuministro;
-    public costoSuministro(String n, double c, int i){
-        this.nombre = n;
-        this.costo = c;
-        this.indiceSuministro = i;
+    public costoSuministro(String n, double ca, double co){
+        super(n,ca);
+        this.costo = co;
     }
     @Override
     public String toString(){
-        return this.nombre + " - ( $" + this.costo + ")[" + this.indiceSuministro + "]";
+        return this.nombre + " - (" + this.cantidad + ")" + "[ $" + this.costo + "]";
     }
 }

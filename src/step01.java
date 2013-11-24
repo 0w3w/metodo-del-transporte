@@ -188,8 +188,13 @@ public class step01 extends javax.swing.JFrame {
     }//GEN-LAST:event_restartBtnActionPerformed
 
     private void addSuministroBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSuministroBtnActionPerformed
-        String nombreSuministroStr = nombreSuministroTxt.getText();
-        String cantidadSuministroStr = cantidadSuministroTxt.getText();
+        // No Duplicados en Lista
+        String nombreSuministroStr = nombreSuministroTxt.getText().trim();
+        if(nombreSuministroStr.length() == 0){
+            JOptionPane.showMessageDialog(this, "Escribe un nombre");
+            return;
+        }
+        String cantidadSuministroStr = cantidadSuministroTxt.getText().trim();
         double cantidadSuministroDouble = 0.0;
         try { 
             cantidadSuministroDouble = Double.parseDouble(cantidadSuministroStr);
@@ -201,8 +206,13 @@ public class step01 extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "La cantidad no puede ser negativa");
             return;
         }
+        suministro newSuministro = new suministro(nombreSuministroStr,cantidadSuministroDouble);
+        if(this.suministrosListModel.contains(newSuministro)){
+            JOptionPane.showMessageDialog(this, "Lo sentimos, no puede haber dos Suministros llamados igual");
+            return;
+        }
         // Agregar a la lista
-        this.suministrosListModel.addElement((new suministro(nombreSuministroStr,cantidadSuministroDouble)));
+        this.suministrosListModel.addElement(newSuministro);
         // Reset campos
         this.nombreSuministroTxt.setText("");
         this.cantidadSuministroTxt.setText("");
