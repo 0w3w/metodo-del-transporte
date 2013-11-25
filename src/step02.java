@@ -282,12 +282,29 @@ public class step02 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void nextStepBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextStepBtnActionPerformed
-        // TODO add your handling code here:
+        if(this.demandasListModel.size() < 1){
+            JOptionPane.showMessageDialog(this, "Al menos se debe agregar una Demanda");
+            return;
+        }
+        LinkedList<demanda> demandas = new LinkedList<>();
+        for(int i = 0; i < this.demandasListModel.size(); i++){
+            demandas.add((demanda)this.demandasListModel.get(i));
+        }
+        metodoTransporte mt = new metodoTransporte(suministrosOrig, demandas);
+        System.out.println(mt.getResults(true));
+        /*
+        this.dispose();
+        new step03(mt).setVisible(true);
+        */
     }//GEN-LAST:event_nextStepBtnActionPerformed
 
     private void restartBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restartBtnActionPerformed
-        this.dispose();
-        new main().setVisible(true);
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog (null, "Si sigues se perderá tu calculo, ¿Estás seguro?","Atencion",dialogButton);
+        if(dialogResult == JOptionPane.YES_OPTION){
+            this.dispose();
+            new main().setVisible(true);
+        }
     }//GEN-LAST:event_restartBtnActionPerformed
 
     private void addSuministroBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSuministroBtnActionPerformed
