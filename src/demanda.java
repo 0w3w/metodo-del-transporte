@@ -16,12 +16,14 @@ import java.util.PriorityQueue;
 public class demanda {
     public String nombre;
     public double cantidad;
+    public double penalizacion;
     LinkedList<suministro> costoSuministro;
     
     public demanda(String n, double c, LinkedList<suministro> cs){
         this.nombre = n;
         this.cantidad = c;
         this.costoSuministro = cs;
+        this.penalizacion = 0;
     }
     @Override
     public String toString(){

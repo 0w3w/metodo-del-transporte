@@ -76,6 +76,9 @@ public class step02 extends javax.swing.JFrame {
         eliminarCostoDemanda = new javax.swing.JButton();
         cantidadDemandaTxt = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        cantidadPenalizacionTxt = new javax.swing.JTextField();
+        subTitle1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -155,6 +158,13 @@ public class step02 extends javax.swing.JFrame {
 
         jLabel9.setText("Cantidad Demanda");
 
+        jLabel10.setText("Penalizacion*");
+
+        cantidadPenalizacionTxt.setText("0");
+
+        subTitle1.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        subTitle1.setText("* en caso de necesitarla");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -180,40 +190,44 @@ public class step02 extends javax.swing.JFrame {
                                             .addComponent(jLabel6))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGap(0, 179, Short.MAX_VALUE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addComponent(agregarCostoADemanda)
-                                                .addGap(186, 186, 186))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabel9)
-                                                    .addComponent(cantidadDemandaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGap(30, 30, 30)))))
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(agregarCostoADemanda)
+                                        .addGap(186, 186, 186)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5)
                                     .addComponent(scrollPaneSuministros, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel8)
-                                    .addComponent(nombreDemandaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(addSuministroBtn))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(subTitle1)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGap(12, 12, 12)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel7)
+                                            .addComponent(jLabel8)
+                                            .addComponent(nombreDemandaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(addSuministroBtn))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(costoSuministroTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(eliminarCostoDemanda))
-                        .addGap(266, 266, 266))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(cantidadDemandaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(cantidadPenalizacionTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel9)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel10))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(costoSuministroTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(eliminarCostoDemanda, javax.swing.GroupLayout.Alignment.TRAILING))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                     .addContainerGap(526, Short.MAX_VALUE)
@@ -237,16 +251,15 @@ public class step02 extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(scrollPaneSuministros, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel9))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(nombreDemandaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(22, 22, 22)
-                                .addComponent(cantidadDemandaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(nombreDemandaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cantidadDemandaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cantidadPenalizacionTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -266,7 +279,9 @@ public class step02 extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(addSuministroBtn)
                     .addComponent(eliminarCostoDemanda))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(subTitle1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nextStepBtn)
                     .addComponent(restartBtn))
@@ -291,16 +306,16 @@ public class step02 extends javax.swing.JFrame {
             demandas.add((demanda)this.demandasListModel.get(i));
         }
         metodoTransporte mt = new metodoTransporte(suministrosOrig, demandas);
-        if(mt.checkForDummies() > 0){
+        if(mt.checkForDummies() < 0){
             JOptionPane.showMessageDialog(this, "Problema no balanceado, se agregara un dummie de Suministro");
-        }else if(mt.checkForDummies() < 0){
-            JOptionPane.showMessageDialog(this, "Problema no balanceado, se agregara un dummie de Demanda");
+        }else if(mt.checkForDummies() > 0){
+            JOptionPane.showMessageDialog(this, "Problema no balanceado, no se pueden realizar dummies en Demandas");
+            return;
         }
-        System.out.println(mt.getResults(true));
-        /*
+        //System.out.println(mt.getResults(true));
         this.dispose();
         new step03(mt).setVisible(true);
-        */
+        
     }//GEN-LAST:event_nextStepBtnActionPerformed
 
     private void restartBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restartBtnActionPerformed
@@ -330,12 +345,23 @@ public class step02 extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "La cantidad no puede ser negativa");
             return;
         }
+        String cantidadPenalizacionStr = this.cantidadPenalizacionTxt.getText().trim();
+        double cantidadPenalizacionDouble = 0.0;
+        try { 
+            cantidadPenalizacionDouble = Double.parseDouble(cantidadPenalizacionStr);
+        } catch(Exception ex){
+            JOptionPane.showMessageDialog(this, "La penalizacion no está escrita correctamente");
+            return;
+        }
         // Agregar la demanda
         LinkedList<suministro> csa =  new LinkedList();
         for(int i = 0; i < this.costosListModel.size(); i++){
             csa.add((suministro)this.costosListModel.get(i));
         }
         demanda newDemanda = new demanda(nombreDemandaStr, cantidadDemandaDouble, csa);
+        if(cantidadPenalizacionDouble > 0){
+            newDemanda.penalizacion = cantidadPenalizacionDouble;
+        }
         if(this.demandasListModel.contains(newDemanda)){
             JOptionPane.showMessageDialog(this, "Lo sentimos, no puede haber dos Demandas llamadas igual");
             return;
@@ -344,6 +370,7 @@ public class step02 extends javax.swing.JFrame {
         // Reset Fields
         this.nombreDemandaTxt.setText("");
         this.cantidadDemandaTxt.setText("");
+        this.cantidadPenalizacionTxt.setText("");
         this.suministrosTmpListModel.clear();
         this.costosListModel.clear();
         ListIterator<suministro> listIterator = this.suministrosOrig.listIterator();
@@ -408,10 +435,12 @@ public class step02 extends javax.swing.JFrame {
     private javax.swing.JButton addSuministroBtn;
     private javax.swing.JButton agregarCostoADemanda;
     private javax.swing.JTextField cantidadDemandaTxt;
+    private javax.swing.JTextField cantidadPenalizacionTxt;
     private javax.swing.JTextField costoSuministroTxt;
     private javax.swing.JButton eliminarCostoDemanda;
     private javax.swing.JButton eliminarDemandaBtn;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -427,5 +456,6 @@ public class step02 extends javax.swing.JFrame {
     private javax.swing.JButton restartBtn;
     private javax.swing.JScrollPane scrollPaneSuministros;
     private javax.swing.JLabel subTitle;
+    private javax.swing.JLabel subTitle1;
     // End of variables declaration//GEN-END:variables
 }

@@ -35,6 +35,23 @@ public class metodoTransporte {
         return difference;
     }
     
+    private void generateDummies(double balance){
+        if(balance < 0){
+            //Problema no balanceado, se agregara un dummie de Suministro
+            suministro dummie = new suministro("DUMMIE",Math.abs(balance));
+            this.suministros.add(dummie);
+            ListIterator<demanda> listIteratorDem = this.demandas.listIterator();
+            demanda dmTmp;
+            while (listIteratorDem.hasNext()) {
+                dmTmp = ((demanda)listIteratorDem.next());
+                double penalizacion = dmTmp.penalizacion;
+                dmTmp.costoSuministro.add(new costoSuministro("DUMMIE",Math.abs(balance),penalizacion));
+            }
+        }else if(balance > 0){
+            //Problema no balanceado, no se aceptan Dummies en DEMANDAS
+        }
+    }
+    
     private double[][] getMetodoMatrix(){
         suministro  suministroTmp;
         demanda     demandaTmp;
@@ -53,10 +70,15 @@ public class metodoTransporte {
         }
         return matriz;
     }
-
+    
     public String getResults(boolean debug){
+        // XXX Sorry fot the hard-coding, but I've no time, I'm on finals
         String resultado = "";
         String coeficientesFuncionObjetivo = "";
+        double balance = this.checkForDummies();
+        if(balance != 0){
+            this.generateDummies(balance);
+        }
         double[][] matrizDeCostos = getMetodoMatrix();
         int variableNumber = this.suministros.size() * this.demandas.size();
         // Calcular Funcion Objetivo
