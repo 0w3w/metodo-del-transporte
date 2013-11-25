@@ -291,6 +291,11 @@ public class step02 extends javax.swing.JFrame {
             demandas.add((demanda)this.demandasListModel.get(i));
         }
         metodoTransporte mt = new metodoTransporte(suministrosOrig, demandas);
+        if(mt.checkForDummies() > 0){
+            JOptionPane.showMessageDialog(this, "Problema no balanceado, se agregara un dummie de Suministro");
+        }else if(mt.checkForDummies() < 0){
+            JOptionPane.showMessageDialog(this, "Problema no balanceado, se agregara un dummie de Demanda");
+        }
         System.out.println(mt.getResults(true));
         /*
         this.dispose();

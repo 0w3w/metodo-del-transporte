@@ -1,5 +1,6 @@
 
 import java.util.LinkedList;
+import java.util.ListIterator;
 import lpsolve.LpSolve;
 import lpsolve.LpSolveException;
 
@@ -19,6 +20,19 @@ public class metodoTransporte {
     public metodoTransporte(LinkedList<suministro> iSu, LinkedList<demanda> ide){
         this.suministros = iSu;
         this.demandas = ide;
+    }
+    
+    public double checkForDummies(){
+        int difference = 0;
+        ListIterator<suministro> listIteratorSum = this.suministros.listIterator();
+        while (listIteratorSum.hasNext()) {
+            difference += ((suministro)listIteratorSum.next()).cantidad;
+        }
+        ListIterator<demanda> listIteratorDem = this.demandas.listIterator();
+        while (listIteratorDem.hasNext()) {
+            difference -= ((demanda)listIteratorDem.next()).cantidad;
+        }
+        return difference;
     }
     
     private double[][] getMetodoMatrix(){
@@ -51,7 +65,6 @@ public class metodoTransporte {
                 coeficientesFuncionObjetivo += matrizDeCostos[i][j] + " ";
             }
         }
-        resultado += "DEBUG INFORMATION \n\n";
         resultado += "- Coeficientes de la funcion objetivo : "+coeficientesFuncionObjetivo + "\n";
         try {   
             // Crea un problema con 2 variables y 0 restricciones        
@@ -108,11 +121,18 @@ public class metodoTransporte {
             // Resuelve el problema de LP
                 solver.solve();
             // Imprime Resultados
-                resultado += "Valor de la función objetivo: " + solver.getObjective() + "\n";
+                String resultadoParsed = "\n-- Resultados Legibles\n";
+                resultado += "\n- Resultados\nValor de la función objetivo: " + solver.getObjective() + "\n";
+                demanda dmtmp;
+                suministro sumtmp;
                 double[] var = solver.getPtrVariables();
                 for (int i = 0; i < var.length; i++) {
                     resultado += "Valores de la variable[" + i + "] = " + var[i] + "\n";
+                    dmtmp = (demanda) this.demandas.get(i % this.demandas.size());
+                    sumtmp = (suministro) this.suministros.get(i / (int)this.demandas.size());
+                    resultadoParsed += "De " + sumtmp.nombre + " a " + dmtmp.nombre + " " + var[i] + "\n";
                 }
+                resultado += resultadoParsed;
             // Libera la memoria
                 solver.deleteLp();
         }catch (LpSolveException e) {
